@@ -1,0 +1,17 @@
+class Solution {
+    public int getGcd(int n, int m){
+        if(m == 0){
+            return n;
+        } else{
+            return getGcd(m, n%m);
+        }
+    }
+
+    public String gcdOfStrings(String str1, String str2) {
+        if(!(str1 + str2).equals(str2 + str1)){
+            return "";
+        }
+        int gcd = getGcd(str1.length(), str2.length());
+        return str1.substring(0, gcd);
+    }
+}
