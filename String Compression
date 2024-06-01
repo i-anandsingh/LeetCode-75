@@ -1,0 +1,25 @@
+class Solution {
+    public int compress(char[] chars) {
+        int n = chars.length;
+        if(n == 0){
+            return 0;
+        }
+        int readIndex = 0;
+        int writeIndex = 0;
+        while(readIndex < n){
+            char ch = chars[readIndex];
+            int cnt = 0;
+            while(readIndex < n && chars[readIndex] == ch){
+                readIndex++;
+                cnt++;
+            }
+            chars[writeIndex++] = ch;
+            if(cnt > 1){
+                for(char c : Integer.toString(cnt).toCharArray()){
+                    chars[writeIndex++] = c;
+                }
+            }
+        }
+        return writeIndex;
+    }
+}
