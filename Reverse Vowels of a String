@@ -1,0 +1,63 @@
+// Brute Force
+class Solution {
+    public void reverseString(List<Boolean> replaced, StringBuilder s, int i, int j){
+        char ch = s.charAt(j);
+        s.setCharAt(j, s.charAt(i));
+        s.setCharAt(i, ch);
+        replaced.set(i, true);
+        replaced.set(j, true);
+    }
+
+    public String reverseVowels(String s) {
+        boolean replaceI = false, replaceJ = false;
+        Set<Character> vowels = Set.of('a','e','i','o','u','A', 'E', 'I', 'O', 'U');
+        List<Boolean> replaced = new ArrayList<>(Collections.nCopies(s.length(), false));
+        StringBuilder reversedString = new StringBuilder(s);
+        for(int i = 0, j = s.length()-1; i < s.length() && j >= 0;){
+            if(!replaced.get(i) && vowels.contains(reversedString.charAt(i))){
+                replaceI = true;
+            } else {
+                i++;
+            }
+            if(!replaced.get(j) && vowels.contains(reversedString.charAt(j))){
+                replaceJ = true;
+            } else {
+                j--;
+            }
+            if(replaceI && replaceJ){
+                reverseString(replaced, reversedString, i, j);
+                replaceI = false;
+                replaceJ = false;
+                i++;
+                j--;
+            }
+        }
+        return reversedString.toString();
+    }
+}
+
+//Optmized Approach
+class Solution {
+    public String reverseVowels(String s) {
+        char[] word = s.toCharArray();
+        int start = 0;
+        int end = s.length()-1;
+        String vowels = "aeiouAEIOU";
+
+        while(start < end){
+            while(start < end && vowels.indexOf(word[start]) == -1){
+                start++;
+            }
+            while(start < end && vowels.indexOf(word[end]) == -1){
+                end--;
+            }
+            char ch = word[start];
+            word[start] = word[end];
+            word[end] = ch;
+            start++;
+            end--;
+        }
+        String answer = new String(word);
+        return answer;
+    }
+}
